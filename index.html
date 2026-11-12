@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Becky Essays | 1-on-1 Academic Support, Editing &amp; Coursework Guidance</title>
+  
+  <!-- Google Fonts: Inter, Plus Jakarta Sans & Merriweather -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              950: '#080D1A',
+              900: '#0F172A',
+              800: '#1E293B',
+              700: '#334155',
+            },
+            paper: '#F8FAFC',
+            amber: {
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            serif: ['Merriweather', 'Georgia', 'serif'],
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-paper text-slate-700 font-sans antialiased selection:bg-amber-600 selection:text-white">
+
+  <!-- Toast Notification Banner (Replaces alert) -->
+  <div id="toast-notification" class="fixed top-20 right-4 z-50 hidden max-w-sm bg-navy-900 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-3 transition-all duration-300">
+    <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-600/20 text-amber-500">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+    </span>
+    <p id="toast-message" class="text-sm font-medium">Action completed.</p>
+  </div>
+
+  <!-- Sticky Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        <!-- Brand Logo -->
+        <a href="#" class="flex items-center gap-2.5 group">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-navy-900 flex items-center justify-center text-amber-500 shadow-sm group-hover:bg-navy-800 transition-colors">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+            </svg>
+          </div>
+          <div>
+            <span data-brand-name class="font-serif font-bold text-lg sm:text-xl text-navy-900 tracking-tight block leading-none">Becky Essays</span>
+            <span class="text-[11px] font-medium uppercase tracking-widest text-amber-600 block mt-0.5">Academic Studio</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+          <a href="#services" class="hover:text-navy-900 transition-colors">Services</a>
+          <a href="#samples" class="hover:text-navy-900 transition-colors">Samples</a>
+          <a href="#about" class="hover:text-navy-900 transition-colors">About</a>
+          <a href="#how-it-works" class="hover:text-navy-900 transition-colors">How It Works</a>
+          <a href="#reviews" class="hover:text-navy-900 transition-colors">Reviews</a>
+        </nav>
+
+        <!-- Desktop CTA & Mobile Menu Toggle -->
+        <div class="flex items-center gap-3">
+          <a href="#quote-form" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-sm font-semibold shadow-sm transition-all">
+            Get a Free Quote
+          </a>
+          <button id="mobile-menu-btn" type="button" aria-label="Toggle Menu" class="md:hidden p-2.5 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-5 space-y-2 shadow-lg">
+      <a href="#services" class="block px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-slate-50">Services</a>
+      <a href="#samples" class="block px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-slate-50">Work Samples</a>
+      <a href="#about" class="block px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-slate-50">About</a>
+      <a href="#how-it-works" class="block px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-slate-50">How It Works</a>
+      <a href="#reviews" class="block px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-slate-50">Student Reviews</a>
+      <div class="pt-2">
+        <a href="#quote-form" class="block w-full text-center px-5 py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold shadow-sm">
+          Get a Free Quote &amp; Timeline
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1. Hero Section -->
+  <section class="relative overflow-hidden bg-navy-900 text-white pt-14 pb-20 sm:pt-20 sm:pb-28">
+    <!-- Subtle Editorial Grid Pattern Overlay -->
+    <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#F8FAFC 1px, transparent 1px); background-size: 28px 28px;"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-800 border border-slate-700/80 text-amber-400 text-xs sm:text-sm font-medium mb-6">
+          <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+          <span>Accepting Fall &amp; Spring Semester Inquiries</span>
+        </div>
+
+        <h1 class="font-serif text-3xl sm:text-5xl lg:text-[3.4rem] font-bold tracking-tight text-white leading-[1.15] mb-6">
+          Master Your Coursework Without the Burnout.
+        </h1>
+
+        <p class="text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed mb-8 max-w-2xl">
+          Personalized 1-on-1 tutoring, essay editing, and structured study support across writing, STEM, nursing, and business—built to help busy college students meet deadlines and boost their grades.
+        </p>
+
+        <!-- Primary & Secondary CTAs -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 mb-10">
+          <a href="#quote-form" class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-display font-bold text-base shadow-lg shadow-amber-950/30 transition-all">
+            <span>Get a Free Quote &amp; Timeline</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="#samples" class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-navy-800 hover:bg-navy-700 text-slate-100 border border-slate-700 font-semibold text-base transition-all">
+            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <span>View Work Samples</span>
+          </a>
+        </div>
+
+        <!-- Trust Bar -->
+        <div class="pt-6 border-t border-slate-800 flex flex-wrap items-center gap-x-6 gap-y-2.5 text-xs sm:text-sm text-slate-300 font-medium">
+          <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            Fast 24–48 Hour Turnarounds
+          </span>
+          <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            APA, MLA, Chicago &amp; IEEE Compliant
+          </span>
+          <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            100% Confidential &amp; Judgment-Free
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Services Grid -->
+  <section id="services" class="py-16 sm:py-24 bg-paper">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mb-12 sm:mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-600 block mb-2">Core Capabilities</span>
+        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy-900 mb-4">Structured Academic Support Across Disciplines</h2>
+        <p class="text-slate-600 text-base sm:text-lg">Every session, outline, and edit is mapped directly against your professor’s grading rubric so nothing gets missed.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        <!-- Card 1: Writing, Research & Essay Editing -->
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-navy-900 text-amber-500 flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+            </div>
+            <h3 class="font-display text-xl font-bold text-navy-900 mb-3">Writing, Research &amp; Essay Editing</h3>
+            <p class="text-slate-600 leading-relaxed mb-5">
+              From blank-page brainstorming to final polish, get structured guidance on research papers, literature reviews, discussion posts, and case studies. Services include thesis refinement, structural organization, line-by-line editing, and strict formatting across APA, MLA, Chicago, and Harvard styles.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-100">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">Research Papers</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">APA 7th / MLA</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">Literature Reviews</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Quantitative, STEM & Business Support -->
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-navy-900 text-amber-500 flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h3 class="font-display text-xl font-bold text-navy-900 mb-3">Quantitative, STEM &amp; Business Support</h3>
+            <p class="text-slate-600 leading-relaxed mb-5">
+              Step-by-step walkthroughs and problem-set breakdowns for subjects that require precision. Covers college algebra, statistics, accounting, finance, economics, and introductory computer science—focusing on clear explanations so you understand the formulas, logic, and final outputs.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-100">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">Statistics &amp; SPSS</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">Accounting &amp; Finance</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">Intro CS / Python</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Nursing & Health Sciences Guidance -->
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-navy-900 text-amber-500 flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+            <h3 class="font-display text-xl font-bold text-navy-900 mb-3">Nursing &amp; Health Sciences Guidance</h3>
+            <p class="text-slate-600 leading-relaxed mb-5">
+              Specialized academic support tailored to the demanding pace of nursing and allied health programs. Includes care plan structuring, evidence-based practice summaries, clinical reflection editing, and study guides for anatomy, physiology, and pharmacology prerequisites.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-100">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">Care Plans</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">EBP Summaries</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">A&amp;P / Patho</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Ongoing Online Class & Pacing Support -->
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-navy-900 text-amber-500 flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="font-display text-xl font-bold text-navy-900 mb-3">Ongoing Online Class &amp; Pacing Support</h3>
+            <p class="text-slate-600 leading-relaxed mb-5">
+              Stay ahead of weekly modules without falling behind on deadlines. Designed for working students and full-time learners who need consistent accountability, weekly rubric breakdowns, exam prep, and structured study schedules throughout the entire semester.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-100">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">Weekly Modules</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">Exam Study Guides</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium">Semester Pacing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Interactive Work Samples Showcase -->
+  <section id="samples" class="py-16 sm:py-24 bg-white border-y border-slate-200/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-600 block mb-2">Portfolio Proof</span>
+          <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy-900 mb-3">Anonymized Work Samples</h2>
+          <p class="text-slate-600 text-base sm:text-lg max-w-2xl">Explore how weak drafts, clinical prompts, and statistical problem sets are transformed into rubric-ready academic deliverables.</p>
+        </div>
+
+        <!-- Sample Selector Tabs -->
+        <div class="flex flex-wrap gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200/70" role="tablist">
+          <button type="button" onclick="switchSampleTab('essay')" id="tab-essay" class="sample-tab active px-4 py-2.5 rounded-lg text-xs sm:text-sm font-semibold bg-navy-900 text-white shadow-sm transition-all">
+            1. Before &amp; After Essay Edit
+          </button>
+          <button type="button" onclick="switchSampleTab('nursing')" id="tab-nursing" class="sample-tab px-4 py-2.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-600 hover:text-navy-900 transition-all">
+            2. Nursing Care Plan
+          </button>
+          <button type="button" onclick="switchSampleTab('stats')" id="tab-stats" class="sample-tab px-4 py-2.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-600 hover:text-navy-900 transition-all">
+            3. Statistics Walkthrough
+          </button>
+        </div>
+      </div>
+
+      <!-- Sample Panel 1: Before & After Essay Edit -->
+      <div id="panel-essay" class="sample-panel bg-paper rounded-2xl border border-slate-200 p-5 sm:p-8 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-5 mb-6 border-b border-slate-200">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-1 rounded-md">PSYC 310 • Organizational Psychology</span>
+            <h3 class="font-display text-lg sm:text-xl font-bold text-navy-900 mt-2">Literature Review Paragraph Refinement (APA 7th Edition)</h3>
+          </div>
+          <span class="text-xs text-slate-500 font-medium">Focus: Academic Tone, Conciseness &amp; Evidence Integration</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Before Column -->
+          <div class="bg-white rounded-xl p-5 sm:p-6 border border-rose-200/80 relative">
+            <div class="flex items-center justify-between mb-3">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-rose-700 bg-rose-50 px-2.5 py-1 rounded-md">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-600"></span>
+                Original Student Draft
+              </span>
+              <span class="text-xs text-slate-400">Grade Risk: C+ (Wordy / Weak Citation)</span>
+            </div>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed font-serif italic">
+              "Nowadays a lot of companies are letting people work from home and this has both good and bad things about it. In a study by Smith (2022), he talked about how workers feel less stressed when they don't have to drive to work every day. However, some people feel lonely and left out of team meetings which hurts how well the company does over time. So managers need to figure out a better way to communicate with remote workers."
+            </p>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-rose-700 space-y-1">
+              <p><strong>Rubric Issue 1:</strong> Informal phrasing ("Nowadays," "a lot," "good and bad things").</p>
+              <p><strong>Rubric Issue 2:</strong> Missing synthesis of mechanisms behind isolation &amp; performance.</p>
+            </div>
+          </div>
+
+          <!-- After Column -->
+          <div class="bg-white rounded-xl p-5 sm:p-6 border-2 border-emerald-500/40 relative shadow-sm">
+            <div class="flex items-center justify-between mb-3">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                Edited &amp; Rubric-Aligned Version
+              </span>
+              <span class="text-xs font-semibold text-emerald-700">Target Score: 96% (A)</span>
+            </div>
+            <p class="text-navy-900 text-sm sm:text-base leading-relaxed font-serif">
+              "The widespread adoption of remote work arrangements presents a dual organizational dynamic, simultaneously reducing commuter-related burnout while straining team cohesion. Empirical findings indicate that telecommuting significantly lowers daily cortisol levels and increases perceived autonomy (Smith &amp; Patel, 2022). Conversely, prolonged physical separation diminishes spontaneous knowledge sharing and fosters professional isolation, which correlates with reduced organizational commitment (Chen, 2023). Consequently, leadership must implement structured asynchronous communication protocols to preserve collaborative output without eroding employee flexibility."
+            </p>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-emerald-800 space-y-1">
+              <p><strong>Editor Note 1:</strong> Replaced conversational fillers with precise scholarly vocabulary.</p>
+              <p><strong>Editor Note 2:</strong> Added comparative synthesis (Smith &amp; Patel, 2022; Chen, 2023) for critical depth.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sample Panel 2: Nursing Care Plan & Patho Guide -->
+      <div id="panel-nursing" class="sample-panel hidden bg-paper rounded-2xl border border-slate-200 p-5 sm:p-8 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-5 mb-6 border-b border-slate-200">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-1 rounded-md">NUR 305 • Adult Health Clinical</span>
+            <h3 class="font-display text-lg sm:text-xl font-bold text-navy-900 mt-2">Acute Decompensated Heart Failure (ADHF) — Priority Care Plan Excerpt</h3>
+          </div>
+          <span class="text-xs text-slate-500 font-medium">Format: NANDA-I / NIC / NOC Clinical Matrix</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-xl border border-slate-200">
+            <span class="text-xs font-bold uppercase tracking-wider text-navy-900 bg-slate-100 px-2.5 py-1 rounded">1. Assessment Data</span>
+            <ul class="mt-3 text-sm text-slate-600 space-y-2 list-disc list-inside">
+              <li><strong>Subjective:</strong> Reports orthopnea (3-pillow), dyspnea on minimal exertion.</li>
+              <li><strong>Objective:</strong> SpO2 89% on room air, RR 26/min, bilateral basilar crackles, +3 pitting pedal edema, BNP 1,420 pg/mL.</li>
+            </ul>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-slate-200">
+            <span class="text-xs font-bold uppercase tracking-wider text-navy-900 bg-slate-100 px-2.5 py-1 rounded">2. Nursing Diagnosis</span>
+            <p class="mt-3 text-sm text-navy-900 font-medium leading-relaxed">
+              Impaired Gas Exchange related to alveolar-capillary membrane fluid accumulation secondary to left ventricular dysfunction, as evidenced by SpO2 89%, tachypnea, and bibasilar crackles.
+            </p>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-slate-200">
+            <span class="text-xs font-bold uppercase tracking-wider text-navy-900 bg-slate-100 px-2.5 py-1 rounded">3. Priority Interventions</span>
+            <ul class="mt-3 text-sm text-slate-600 space-y-2 list-disc list-inside">
+              <li>Place patient in High-Fowler’s position immediately.</li>
+              <li>Administer supplemental O2 via nasal cannula to maintain SpO2 ≥ 92%.</li>
+              <li>Administer IV Furosemide 40 mg as ordered; monitor strict I&amp;O and serum K+.</li>
+            </ul>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-slate-200">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2.5 py-1 rounded">4. Evidence Rationale</span>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+              High-Fowler’s reduces venous return (preload) to the heart and maximizes diaphragmatic excursion. Loop diuretics decrease intravascular volume overload, while potassium monitoring prevents hypokalemia-induced dysrhythmias (Ackley et al., 2023).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sample Panel 3: Statistics & Quantitative Walkthrough -->
+      <div id="panel-stats" class="sample-panel hidden bg-paper rounded-2xl border border-slate-200 p-5 sm:p-8 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-5 mb-6 border-b border-slate-200">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-1 rounded-md">STAT 220 • Applied Biostatistics</span>
+            <h3 class="font-display text-lg sm:text-xl font-bold text-navy-900 mt-2">Two-Sample Independent t-Test &amp; APA Results Reporting</h3>
+          </div>
+          <span class="text-xs text-slate-500 font-medium">Software: SPSS / R Studio Output Breakdown</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white p-5 sm:p-6 rounded-xl border border-slate-200 space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-navy-900 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+              <div>
+                <h4 class="font-display font-bold text-navy-900 text-sm">State Hypotheses (α = 0.05)</h4>
+                <p class="text-sm text-slate-600 mt-1"><strong>H₀:</strong> μ₁ = μ₂ (No mean difference in exam scores between spaced-practice and cramming groups).<br/><strong>H₁:</strong> μ₁ ≠ μ₂ (A statistically significant difference exists between study methods).</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-navy-900 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+              <div>
+                <h4 class="font-display font-bold text-navy-900 text-sm">Test Statistic &amp; Degrees of Freedom</h4>
+                <p class="text-sm text-slate-600 mt-1">Levene’s test confirms equal variances (<em>p</em> = .412).<br/>Spaced Practice (<em>n</em> = 32): <em>M</em> = 88.4, <em>SD</em> = 5.2 | Cramming (<em>n</em> = 30): <em>M</em> = 79.1, <em>SD</em> = 6.1<br/>Computed <strong>t(60) = 6.47, p &lt; .001</strong>, 95% CI [6.42, 12.18], Cohen’s <em>d</em> = 1.64.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-navy-900 text-white p-5 sm:p-6 rounded-xl flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Step 3: APA Write-Up Ready to Submit</span>
+              <p class="text-sm text-slate-200 leading-relaxed mt-3 font-serif">
+                "An independent-samples t-test revealed that students utilizing spaced practice (M = 88.40, SD = 5.20) scored significantly higher on the final assessment than those utilizing massed cramming (M = 79.10, SD = 6.10), t(60) = 6.47, p &lt; .001, d = 1.64. The null hypothesis is rejected."
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 text-xs text-slate-400">
+              Includes annotated SPSS syntax &amp; assumption checks.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Bio Section -->
+  <section id="about" class="py-16 sm:py-24 bg-paper">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 lg:p-12 shadow-sm">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div class="lg:col-span-7">
+            <span class="text-xs font-bold uppercase tracking-widest text-amber-600 block mb-2">About Your Academic Strategist</span>
+            <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy-900 mb-5">Clear Guidance. Zero Judgment.</h2>
+            <div class="space-y-4 text-slate-600 text-base leading-relaxed">
+              <p>
+                College coursework shouldn't feel like an uphill battle you have to fight alone. Whether you are juggling a full-time job, managing back-to-back clinicals, or simply stuck on a complex rubric, <strong class="text-navy-900" data-brand-name>Becky Essays</strong> exists to turn overwhelming syllabi into manageable, step-by-step wins.
+              </p>
+              <p>
+                With hands-on experience supporting students across humanities, STEM, accounting, nursing, and engineering prerequisites, I bridge the gap between confusing assignment prompts and polished, rubric-ready work. My approach is straightforward: no fluff, no judgment, and clear communication from the moment you send over your syllabus to the day you hit submit.
+              </p>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 space-y-4">
+            <div class="p-5 rounded-2xl bg-paper border border-slate-200/80">
+              <h3 class="font-display font-bold text-navy-900 text-base flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
+                Multi-Disciplinary Range
+              </h3>
+              <p class="text-sm text-slate-600 mt-1.5">Comfortable switching between analytical research papers, statistical problem sets, and technical coursework.</p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-paper border border-slate-200/80">
+              <h3 class="font-display font-bold text-navy-900 text-base flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
+                Rubric-First Approach
+              </h3>
+              <p class="text-sm text-slate-600 mt-1.5">Every session and edit is mapped directly against your professor's grading criteria.</p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-paper border border-slate-200/80">
+              <h3 class="font-display font-bold text-navy-900 text-base flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
+                Reliable Communication
+              </h3>
+              <p class="text-sm text-slate-600 mt-1.5">Clear timelines, upfront flat-rate pricing, and responsive updates so you never wonder where your project stands.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. How It Works (3-Step Horizontal Timeline) -->
+  <section id="how-it-works" class="py-16 sm:py-24 bg-navy-900 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-400 block mb-2">Simple Process</span>
+        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mb-4">How It Works</h2>
+        <p class="text-slate-300 text-base sm:text-lg">No complicated portals or hidden hourly surprises. Just three straightforward steps from syllabus to submission.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <!-- Step 1 -->
+        <div class="bg-navy-800/80 border border-slate-700/80 rounded-2xl p-6 sm:p-8 relative">
+          <div class="w-11 h-11 rounded-xl bg-amber-600 text-white font-display font-extrabold text-lg flex items-center justify-center mb-5 shadow-md">
+            1
+          </div>
+          <h3 class="font-display text-xl font-bold text-white mb-2.5">Send Your Syllabus or Rubric</h3>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Share your assignment guidelines, deadline, and what you need help with via the intake form below or direct message.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-navy-800/80 border border-slate-700/80 rounded-2xl p-6 sm:p-8 relative">
+          <div class="w-11 h-11 rounded-xl bg-amber-600 text-white font-display font-extrabold text-lg flex items-center justify-center mb-5 shadow-md">
+            2
+          </div>
+          <h3 class="font-display text-xl font-bold text-white mb-2.5">Get a Clear Plan &amp; Quote</h3>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Receive a transparent, flat-rate quote and a guaranteed delivery timeline within 2 hours—no hidden fees or surprises.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-navy-800/80 border border-slate-700/80 rounded-2xl p-6 sm:p-8 relative">
+          <div class="w-11 h-11 rounded-xl bg-amber-600 text-white font-display font-extrabold text-lg flex items-center justify-center mb-5 shadow-md">
+            3
+          </div>
+          <h3 class="font-display text-xl font-bold text-white mb-2.5">Review &amp; Submit With Confidence</h3>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Receive your annotated edits, step-by-step solutions, or study materials with plenty of time for questions before your deadline.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Student Testimonials -->
+  <section id="reviews" class="py-16 sm:py-24 bg-paper">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-600 block mb-2">Student Outcomes</span>
+        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy-900 mb-3">Verified Grade Wins</h2>
+        <p class="text-slate-600 text-base sm:text-lg">Feedback from students balancing full-time work, clinical rotations, and heavy credit loads.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        <!-- Review 1 -->
+        <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold">
+                NUR 302 • 96% (A)
+              </span>
+              <div class="flex text-amber-500 text-sm" aria-label="5 out of 5 stars">★★★★★</div>
+            </div>
+            <p class="text-slate-700 text-sm sm:text-base leading-relaxed mb-6">
+              "Working 12-hour shifts while taking Pathophysiology almost broke me. The care plan templates and weekly rubric breakdowns saved my GPA. Delivered 12 hours ahead of my deadline every single time."
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span class="font-semibold text-navy-900">BSN Junior</span>
+            <span>Verified Student</span>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold">
+                STAT 200 • B- to A
+              </span>
+              <div class="flex text-amber-500 text-sm" aria-label="5 out of 5 stars">★★★★★</div>
+            </div>
+            <p class="text-slate-700 text-sm sm:text-base leading-relaxed mb-6">
+              "I was completely lost with SPSS hypothesis testing before midterms. Instead of just giving answers, the walkthrough showed every formula and how to write the APA interpretation. Scored a 94 on my final project."
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span class="font-semibold text-navy-900">Psychology Major</span>
+            <span>Verified Student</span>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold">
+                ENG 102 • Research Paper
+              </span>
+              <div class="flex text-amber-500 text-sm" aria-label="5 out of 5 stars">★★★★★</div>
+            </div>
+            <p class="text-slate-700 text-sm sm:text-base leading-relaxed mb-6">
+              "Sent over a messy 8-page rough draft and a strict rubric. Got back line-by-line edits, restructured topic sentences, and clean APA 7th citations. My professor literally wrote 'exceptionally well argued' in the comments."
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span class="font-semibold text-navy-900">Business Undergrad</span>
+            <span>Verified Student</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Interactive Client Intake & Quote Request Form -->
+  <section id="quote-form" class="py-16 sm:py-24 bg-white border-t border-slate-200/80">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-600 block mb-2">Fast Quote &amp; Timeline</span>
+        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy-900 mb-3">Request Your Free Quote</h2>
+        <p class="text-slate-600 text-base sm:text-lg">Fill out your assignment or course details below. You’ll receive a flat-rate quote and guaranteed timeline within 2 hours.</p>
+      </div>
+
+      <!-- Intake Form Card -->
+      <div id="intake-form-wrapper" class="bg-paper rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm">
+        <form id="student-intake-form" class="space-y-8">
+          
+          <!-- Form Section 1: Contact & Basics -->
+          <div>
+            <h3 class="font-display text-lg font-bold text-navy-900 pb-2.5 mb-5 border-b border-slate-200 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-md bg-navy-900 text-amber-400 text-xs flex items-center justify-center font-bold">1</span>
+              Contact &amp; Time Zone
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label for="student-name" class="block text-sm font-semibold text-navy-900 mb-1.5">First Name or Alias <span class="text-rose-600">*</span></label>
+                <input type="text" id="student-name" required placeholder="e.g., Jordan" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent" />
+              </div>
+
+              <div>
+                <label for="contact-method" class="block text-sm font-semibold text-navy-900 mb-1.5">Best Way to Reach You <span class="text-rose-600">*</span></label>
+                <select id="contact-method" required class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
+                  <option value="WhatsApp">WhatsApp</option>
+                  <option value="Telegram">Telegram</option>
+                  <option value="Email">Email</option>
+                  <option value="Text / iMessage">Text / iMessage</option>
+                  <option value="Instagram DM">Instagram DM</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="contact-handle" class="block text-sm font-semibold text-navy-900 mb-1.5">Your Handle, Number, or Email <span class="text-rose-600">*</span></label>
+                <input type="text" id="contact-handle" required placeholder="e.g., +1 (555) 234-5678 or @jordan" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent" />
+              </div>
+
+              <div>
+                <label for="time-zone" class="block text-sm font-semibold text-navy-900 mb-1.5">Your Time Zone <span class="text-rose-600">*</span></label>
+                <select id="time-zone" required class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
+                  <option value="EST (Eastern Time)">EST (Eastern Time)</option>
+                  <option value="CST (Central Time)">CST (Central Time)</option>
+                  <option value="MST (Mountain Time)">MST (Mountain Time)</option>
+                  <option value="PST (Pacific Time)">PST (Pacific Time)</option>
+                  <option value="GMT / UK">GMT / UK</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Section 2: Type of Support Needed -->
+          <div>
+            <h3 class="font-display text-lg font-bold text-navy-900 pb-2.5 mb-5 border-b border-slate-200 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-md bg-navy-900 text-amber-400 text-xs flex items-center justify-center font-bold">2</span>
+              Course &amp; Support Type
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              <div>
+                <label for="support-type" class="block text-sm font-semibold text-navy-900 mb-1.5">What do you need help with? <span class="text-rose-600">*</span></label>
+                <select id="support-type" required class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
+                  <option value="Single Assignment (Essay / Paper / Case Study)">Single Assignment (Essay / Paper)</option>
+                  <option value="Problem Set / Lab / Technical Task">Problem Set / Lab / Coding</option>
+                  <option value="Exam / Quiz Prep & Study Guide">Exam / Quiz Prep &amp; Study Guide</option>
+                  <option value="Ongoing Weekly Support for an Online Class">Ongoing Online Class Support</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="academic-level" class="block text-sm font-semibold text-navy-900 mb-1.5">Academic Level <span class="text-rose-600">*</span></label>
+                <select id="academic-level" required class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
+                  <option value="Undergraduate (Freshman / Sophomore)">Undergrad (100–200 Level)</option>
+                  <option value="Undergraduate (Junior / Senior)">Undergrad (300–400 Level)</option>
+                  <option value="Nursing / Allied Health Program">Nursing / Allied Health</option>
+                  <option value="Master's / Graduate Level">Master's / Graduate Level</option>
+                  <option value="High School / AP">High School / AP</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="course-name" class="block text-sm font-semibold text-navy-900 mb-1.5">Subject / Course Name <span class="text-rose-600">*</span></label>
+                <input type="text" id="course-name" required placeholder="e.g., BIO 201 or Intro to Stats" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Section 3: Assignment or Class Details -->
+          <div>
+            <h3 class="font-display text-lg font-bold text-navy-900 pb-2.5 mb-5 border-b border-slate-200 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-md bg-navy-900 text-amber-400 text-xs flex items-center justify-center font-bold">3</span>
+              Deadline &amp; Rubric Requirements
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-5">
+              <div>
+                <label for="due-date" class="block text-sm font-semibold text-navy-900 mb-1.5">Exact Due Date &amp; Time <span class="text-rose-600">*</span></label>
+                <input type="datetime-local" id="due-date" required class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent" />
+              </div>
+
+              <div>
+                <label for="scope-length" class="block text-sm font-semibold text-navy-900 mb-1.5">Length or Scope <span class="text-rose-600">*</span></label>
+                <input type="text" id="scope-length" required placeholder="e.g., 1,500 words / 20 problems" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent" />
+              </div>
+
+              <div>
+                <label for="sources-count" class="block text-sm font-semibold text-navy-900 mb-1.5">Peer-Reviewed Sources</label>
+                <input type="text" id="sources-count" placeholder="e.g., 5 scholarly sources (optional)" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent" />
+              </div>
+            </div>
+
+            <!-- Formatting & Software Checkboxes -->
+            <div class="mb-5">
+              <span class="block text-sm font-semibold text-navy-900 mb-2.5">Required Formatting or Software (Select all that apply)</span>
+              <div class="flex flex-wrap gap-2.5">
+                <label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-sm text-slate-700 cursor-pointer hover:border-amber-600">
+                  <input type="checkbox" name="formatting" value="APA 7th" class="rounded text-amber-600 focus:ring-amber-600" />
+                  <span>APA 7th Edition</span>
+                </label>
+                <label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-sm text-slate-700 cursor-pointer hover:border-amber-600">
+                  <input type="checkbox" name="formatting" value="MLA" class="rounded text-amber-600 focus:ring-amber-600" />
+                  <span>MLA</span>
+                </label>
+                <label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-sm text-slate-700 cursor-pointer hover:border-amber-600">
+                  <input type="checkbox" name="formatting" value="Chicago" class="rounded text-amber-600 focus:ring-amber-600" />
+                  <span>Chicago / Turabian</span>
+                </label>
+                <label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-sm text-slate-700 cursor-pointer hover:border-amber-600">
+                  <input type="checkbox" name="formatting" value="IEEE / Harvard" class="rounded text-amber-600 focus:ring-amber-600" />
+                  <span>IEEE / Harvard</span>
+                </label>
+                <label class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-sm text-slate-700 cursor-pointer hover:border-amber-600">
+                  <input type="checkbox" name="formatting" value="Excel / SPSS / R / Python" class="rounded text-amber-600 focus:ring-amber-600" />
+                  <span>Excel / SPSS / R / Python</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Simulated File Upload Dropzone -->
+            <div class="mb-5">
+              <label class="block text-sm font-semibold text-navy-900 mb-1.5">Attach Syllabus, Rubric, or Prompt</label>
+              <div id="file-dropzone" class="border-2 border-dashed border-slate-300 hover:border-amber-600 bg-white rounded-2xl p-6 text-center cursor-pointer transition-colors">
+                <input type="file" id="rubric-files" multiple accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.xlsx,.csv" class="hidden" />
+                <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-2.5">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                </div>
+                <p class="text-sm font-semibold text-navy-900">Click to attach files or drag &amp; drop here</p>
+                <p class="text-xs text-slate-500 mt-1">Supports PDF, DOCX, PNG, JPG, Excel (Max 25MB)</p>
+              </div>
+              <ul id="uploaded-file-list" class="mt-2.5 space-y-1.5"></ul>
+            </div>
+
+            <!-- Special Instructions & Budget -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              <div class="sm:col-span-2">
+                <label for="special-notes" class="block text-sm font-semibold text-navy-900 mb-1.5">Paste Instructions or Specific Notes</label>
+                <textarea id="special-notes" rows="3" placeholder="Include professor preferences, grading rubric details, target grade, or topics you've already started..." class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"></textarea>
+              </div>
+
+              <div>
+                <label for="budget-range" class="block text-sm font-semibold text-navy-900 mb-1.5">Budget Range (Optional)</label>
+                <select id="budget-range" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-navy-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
+                  <option value="Not sure — please send a quote">Not sure — please send a quote</option>
+                  <option value="Under $50">Under $50</option>
+                  <option value="$50 – $100">$50 – $100</option>
+                  <option value="$100 – $250">$100 – $250</option>
+                  <option value="$250+ (Full course / capstone)">$250+ (Full course / capstone)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button type="submit" class="w-full py-4 px-6 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-display font-bold text-base sm:text-lg shadow-lg transition-all flex items-center justify-center gap-2">
+              <span>Submit Inquiry for Free Quote</span>
+              <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </button>
+            <p class="text-center text-xs text-slate-500 mt-3">100% confidential. Never share school portal passwords on public forms—we handle class logistics privately once confirmed.</p>
+          </div>
+        </form>
+
+        <!-- Confirmation Screen State (Hidden until submit) -->
+        <div id="confirmation-screen" class="hidden text-center py-6 sm:py-8">
+          <div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-5">
+            <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy-900 mb-3">Got it! Your details are in.</h3>
+          <p class="text-slate-600 text-base sm:text-lg max-w-xl mx-auto mb-6">
+            I review all inquiries within <strong class="text-navy-900">2 hours</strong> and will send your flat-rate quote and timeline via <strong id="confirm-method" class="text-navy-900">WhatsApp</strong>.
+          </p>
+
+          <!-- Formatted Inquiry Box for Instant DM Paste -->
+          <div class="max-w-xl mx-auto bg-white rounded-2xl border border-slate-200 p-5 text-left mb-6 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Urgent Deadline (Under 12 Hours)?</span>
+              <span class="text-xs text-slate-400">Ready to paste into DM</span>
+            </div>
+            <pre id="formatted-summary-text" class="text-xs sm:text-sm text-slate-700 whitespace-pre-wrap font-sans bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 mb-4"></pre>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <button type="button" onclick="copySummaryToClipboard()" class="flex-1 py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                <span>Copy Summary to Send via WhatsApp / Telegram</span>
+              </button>
+              <a id="direct-whatsapp-btn" href="https://wa.me/15550192834" target="_blank" rel="noopener noreferrer" class="py-3 px-4 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-colors">
+                <span>Open WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          <button type="button" onclick="resetIntakeForm()" class="text-sm font-semibold text-slate-500 hover:text-navy-900 underline">
+            Submit Another Assignment Inquiry
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Footer with Direct Contact Links -->
+  <footer class="bg-navy-950 text-slate-300 pt-14 pb-24 sm:pb-16 border-t border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-slate-800/90">
+        <div class="md:col-span-5">
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="w-9 h-9 rounded-xl bg-navy-800 flex items-center justify-center text-amber-500">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+            </div>
+            <span data-brand-name class="font-serif font-bold text-xl text-white">Becky Essays</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed max-w-sm">
+            1-on-1 academic coaching, rubric-aligned essay editing, and structured coursework guidance for college and graduate students.
+          </p>
+        </div>
+
+        <div class="md:col-span-3">
+          <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-3.5">Quick Links</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="#services" class="hover:text-amber-400 transition-colors">Services &amp; Subjects</a></li>
+            <li><a href="#samples" class="hover:text-amber-400 transition-colors">Work Samples</a></li>
+            <li><a href="#how-it-works" class="hover:text-amber-400 transition-colors">How It Works</a></li>
+            <li><a href="#reviews" class="hover:text-amber-400 transition-colors">Student Reviews</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-4">
+          <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-3.5">Direct Contact</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li class="flex items-center gap-2.5">
+              <span class="text-amber-500 font-semibold">WhatsApp:</span>
+              <a id="footer-whatsapp-link" href="https://wa.me/15550192834" target="_blank" rel="noopener noreferrer" class="text-slate-200 hover:text-amber-400 underline">+1 (555) 019-2834</a>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="text-amber-500 font-semibold">Telegram:</span>
+              <a id="footer-telegram-link" href="https://t.me/beckyessays" target="_blank" rel="noopener noreferrer" class="text-slate-200 hover:text-amber-400 underline">@beckyessays</a>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="text-amber-500 font-semibold">Email:</span>
+              <a id="footer-email-link" href="mailto:hello@beckyessays.com" class="text-slate-200 hover:text-amber-400 underline">hello@beckyessays.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>&copy; <span id="current-year">2026</span> <span data-brand-name>Becky Essays</span>. All rights reserved.</p>
+        <p>Academic tutoring, editorial review &amp; study support services.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating "Customize Page Info" Owner Button -->
+  <button type="button" onclick="toggleCustomizeModal(true)" class="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 px-4 py-3 rounded-full bg-navy-900 hover:bg-navy-800 text-white text-xs sm:text-sm font-semibold shadow-xl border border-slate-700 transition-all">
+    <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+    <span>Customize Page Info</span>
+  </button>
+
+  <!-- Owner Customization & HTML Export Modal -->
+  <div id="customize-modal" class="fixed inset-0 z-50 hidden bg-navy-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-slate-200">
+      <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-200">
+        <div>
+          <h3 class="font-display font-bold text-lg text-navy-900">Customize Portfolio Details</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Update your brand info live and download your ready-to-host HTML.</p>
+        </div>
+        <button type="button" onclick="toggleCustomizeModal(false)" class="p-2 rounded-xl text-slate-400 hover:text-navy-900 hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label for="edit-brand-name" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Brand / Studio Name</label>
+          <input type="text" id="edit-brand-name" value="Becky Essays" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-amber-600" />
+        </div>
+
+        <div>
+          <label for="edit-whatsapp" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">WhatsApp Number (with country code)</label>
+          <input type="text" id="edit-whatsapp" value="+1 (555) 019-2834" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-amber-600" />
+        </div>
+
+        <div>
+          <label for="edit-telegram" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Telegram Handle</label>
+          <input type="text" id="edit-telegram" value="@beckyessays" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-amber-600" />
+        </div>
+
+        <div>
+          <label for="edit-email" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Contact Email</label>
+          <input type="email" id="edit-email" value="hello@beckyessays.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-amber-600" />
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-200 flex flex-col gap-2.5">
+        <button type="button" onclick="applyCustomizations()" class="w-full py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm transition-colors">
+          Apply Changes to Page
+        </button>
+        <button type="button" onclick="exportUpdatedHTML()" class="w-full py-3 px-4 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-colors">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          <span>Download Updated HTML File</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Set current year in footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Toast notification helper (replaces alert)
+    function showToast(message) {
+      const toast = document.getElementById('toast-notification');
+      const msgEl = document.getElementById('toast-message');
+      msgEl.textContent = message;
+      toast.classList.remove('hidden');
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3800);
+    }
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu when clicking a link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Interactive Work Samples Tabs
+    function switchSampleTab(tabKey) {
+      document.querySelectorAll('.sample-panel').forEach(panel => {
+        panel.classList.add('hidden');
+      });
+      document.querySelectorAll('.sample-tab').forEach(btn => {
+        btn.classList.remove('bg-navy-900', 'text-white', 'shadow-sm');
+        btn.classList.add('text-slate-600');
+      });
+
+      const targetPanel = document.getElementById('panel-' + tabKey);
+      const targetTab = document.getElementById('tab-' + tabKey);
+      if (targetPanel && targetTab) {
+        targetPanel.classList.remove('hidden');
+        targetTab.classList.remove('text-slate-600');
+        targetTab.classList.add('bg-navy-900', 'text-white', 'shadow-sm');
+      }
+    }
+
+    // File Upload Dropzone Simulation
+    const dropzone = document.getElementById('file-dropzone');
+    const fileInput = document.getElementById('rubric-files');
+    const fileListEl = document.getElementById('uploaded-file-list');
+    let attachedFileNames = [];
+
+    dropzone.addEventListener('click', () => fileInput.click());
+
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('border-amber-600', 'bg-amber-50/40');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('border-amber-600', 'bg-amber-50/40');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('border-amber-600', 'bg-amber-50/40');
+      if (e.dataTransfer.files.length) {
+        handleFiles(e.dataTransfer.files);
+      }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length) {
+        handleFiles(e.target.files);
+      }
+    });
+
+    function handleFiles(files) {
+      Array.from(files).forEach(file => {
+        if (!attachedFileNames.includes(file.name)) {
+          attachedFileNames.push(file.name);
+        }
+      });
+      renderFileList();
+    }
+
+    function removeAttachedFile(index) {
+      attachedFileNames.splice(index, 1);
+      renderFileList();
+    }
+
+    function renderFileList() {
+      fileListEl.innerHTML = '';
+      attachedFileNames.forEach((name, idx) => {
+        const li = document.createElement('li');
+        li.className = 'flex items-center justify-between px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-medium text-navy-900';
+        li.innerHTML = `
+          <span class="truncate pr-3">📄 ${name}</span>
+          <button type="button" onclick="removeAttachedFile(${idx})" class="text-rose-600 hover:text-rose-800 font-bold">Remove</button>
+        `;
+        fileListEl.appendChild(li);
+      });
+    }
+
+    // Intake Form Submission & DM Summary Generator
+    const intakeForm = document.getElementById('student-intake-form');
+    const confirmationScreen = document.getElementById('confirmation-screen');
+
+    intakeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('student-name').value.trim();
+      const method = document.getElementById('contact-method').value;
+      const handle = document.getElementById('contact-handle').value.trim();
+      const tz = document.getElementById('time-zone').value;
+      const supportType = document.getElementById('support-type').value;
+      const level = document.getElementById('academic-level').value;
+      const course = document.getElementById('course-name').value.trim();
+      const dueDateRaw = document.getElementById('due-date').value;
+      const scope = document.getElementById('scope-length').value.trim();
+      const sources = document.getElementById('sources-count').value.trim() || 'Not specified';
+      const notes = document.getElementById('special-notes').value.trim() || 'None';
+      const budget = document.getElementById('budget-range').value;
+
+      const selectedFormats = Array.from(document.querySelectorAll('input[name="formatting"]:checked'))
+        .map(cb => cb.value)
+        .join(', ') || 'None specified';
+
+      const formattedDate = dueDateRaw ? new Date(dueDateRaw).toLocaleString([], {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      }) : 'Not specified';
+
+      const filesText = attachedFileNames.length > 0 ? attachedFileNames.join(', ') : 'Will send directly in chat';
+      const brandTitle = document.getElementById('edit-brand-name').value.trim() || 'Becky Essays';
+
+      const summary = [
+        `Hi ${brandTitle}! I'd like a quote for:`,
+        `• Name: ${name} (${method}: ${handle})`,
+        `• Course & Level: ${course} (${level})`,
+        `• Support Type: ${supportType}`,
+        `• Due Date: ${formattedDate} (${tz})`,
+        `• Scope / Length: ${scope}`,
+        `• Formatting / Software: ${selectedFormats}`,
+        `• Sources Needed: ${sources}`,
+        `• Files: ${filesText}`,
+        `• Budget: ${budget}`,
+        `• Notes: ${notes}`
+      ].join('\n');
+
+      document.getElementById('confirm-method').textContent = method;
+      document.getElementById('formatted-summary-text').textContent = summary;
+
+      // Update WhatsApp direct link with prefilled message
+      const waRaw = document.getElementById('edit-whatsapp').value.replace(/\D/g, '') || '15550192834';
+      const waBtn = document.getElementById('direct-whatsapp-btn');
+      waBtn.href = `https://wa.me/${waRaw}?text=${encodeURIComponent(summary)}`;
+
+      intakeForm.classList.add('hidden');
+      confirmationScreen.classList.remove('hidden');
+      confirmationScreen.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showToast('Inquiry ready! You can also copy the summary for instant DM.');
+    });
+
+    function copySummaryToClipboard() {
+      const text = document.getElementById('formatted-summary-text').textContent;
+      const tempTextArea = document.createElement('textarea');
+      tempTextArea.value = text;
+      tempTextArea.style.position = 'fixed';
+      tempTextArea.style.left = '-9999px';
+      document.body.appendChild(tempTextArea);
+      tempTextArea.select();
+      try {
+        document.execCommand('copy');
+        showToast('Summary copied! Ready to paste into WhatsApp or Telegram.');
+      } catch (err) {
+        showToast('Please select and copy the summary text manually.');
+      }
+      document.body.removeChild(tempTextArea);
+    }
+
+    function resetIntakeForm() {
+      intakeForm.reset();
+      attachedFileNames = [];
+      renderFileList();
+      confirmationScreen.classList.add('hidden');
+      intakeForm.classList.remove('hidden');
+    }
+
+    // Owner Customization Modal & Live Updater
+    function toggleCustomizeModal(show) {
+      const modal = document.getElementById('customize-modal');
+      if (show) {
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function applyCustomizations() {
+      const brandName = document.getElementById('edit-brand-name').value.trim() || 'Becky Essays';
+      const whatsapp = document.getElementById('edit-whatsapp').value.trim() || '+1 (555) 019-2834';
+      const telegram = document.getElementById('edit-telegram').value.trim() || '@beckyessays';
+      const email = document.getElementById('edit-email').value.trim() || 'hello@beckyessays.com';
+
+      // Update brand name across page
+      document.querySelectorAll('[data-brand-name]').forEach(el => {
+        el.textContent = brandName;
+      });
+      document.title = `${brandName} | 1-on-1 Academic Support, Editing & Coursework Guidance`;
+
+      // Update footer contact links
+      const waDigits = whatsapp.replace(/\D/g, '');
+      const waLink = document.getElementById('footer-whatsapp-link');
+      waLink.textContent = whatsapp;
+      waLink.href = `https://wa.me/${waDigits}`;
+
+      const tgHandleClean = telegram.replace(/^@/, '');
+      const tgLink = document.getElementById('footer-telegram-link');
+      tgLink.textContent = telegram.startsWith('@') ? telegram : `@${telegram}`;
+      tgLink.href = `https://t.me/${tgHandleClean}`;
+
+      const emailLink = document.getElementById('footer-email-link');
+      emailLink.textContent = email;
+      emailLink.href = `mailto:${email}`;
+
+      toggleCustomizeModal(false);
+      showToast('Brand details updated across the page!');
+    }
+
+    function exportUpdatedHTML() {
+      applyCustomizations();
+      // Sync input values into attributes so exported HTML retains them
+      ['edit-brand-name', 'edit-whatsapp', 'edit-telegram', 'edit-email'].forEach(id => {
+        const input = document.getElementById(id);
+        input.setAttribute('value', input.value);
+      });
+
+      const fullHTML = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([fullHTML], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const slug = (document.getElementById('edit-brand-name').value.trim() || 'portfolio')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '_');
+      a.href = url;
+      a.download = `${slug}_portfolio.html`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Exported! Your customized HTML file is downloading.');
+    }
+  </script>
+</body>
+</html>
